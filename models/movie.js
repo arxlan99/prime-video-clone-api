@@ -7,36 +7,17 @@ const movieSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    description: {
-      type: String,
-    },
-    img: {
-      type: String,
-    },
-    imgTitle: {
-      type: String,
-    },
-    imgSmall: {
-      type: String,
-    },
-    video: {
-      type: String,
-    },
-    year: {
-      type: String,
-    },
-    limit: {
+    type: {
       type: String,
     },
     genre: {
       type: String,
     },
-    isSeries: {
-      type: Boolean,
-      default: false,
+    content: {
+      type: Array,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("movie", movieSchema);
+module.exports = mongoose.model("Movie", movieSchema);
