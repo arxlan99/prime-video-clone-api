@@ -17,7 +17,6 @@ exports.register = async (req, res, next) => {
     });
 
     const result = await newUser.save();
-    console.log(result);
     res.status(201).json({ message: "User created", userId: result._id });
   } catch (error) {
     if (!error.statusCode) {
@@ -35,7 +34,7 @@ exports.login = async (req, res, next) => {
     if (!user) {
       const error = new Error("A user with this email could not be found.");
       error.statusCode = 401;
-      throw errow;
+      throw error;
     }
     const isEqual = await bcrypt.compare(password, user.password);
 
@@ -48,12 +47,12 @@ exports.login = async (req, res, next) => {
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       "somesupersecretsecret",
-      { expiresIn: "1h" }
+      { expiresIn: "5h" }
     );
 
     const { password: userPassword, ...info } = user._doc;
 
-    res.status(200).json(info, accessToken);
+    res.status(200).json({ ...info, accessToken });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

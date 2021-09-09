@@ -1,18 +1,21 @@
-const router = require("express").Router;
-const User = require("../models/user");
+const router = require("express").Router();
+
 const userController = require("../controller/user");
+const isAuth = require("../middleware/is-auth");
 
 // Update
-router("/:id", userController.updateUser);
+router.put("/:id", isAuth, userController.updateUser);
 
 // Delete
-router("/:id", userController.deleteUser);
+router.delete("/:id", isAuth, userController.deleteUser);
 
 // Get
-router("/:id", userController.getUser);
+router.get("/find/:id", userController.getUser);
 
 // Get All
-router("/", userController.getAllUsers);
+router.get("/", isAuth, userController.getAllUsers);
 
-//Get User Stats
-router("/stats", userController.getUserStats);
+// Get User Stats
+router.get("/stats", userController.getUserStats);
+
+module.exports = router;

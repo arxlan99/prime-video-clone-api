@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
+const moviesRoutes = require("./routes/movies");
+const listsRoutes = require("./routes/lists");
 
 dotenv.config();
 
@@ -21,6 +23,12 @@ app.use(
 /*---- Routes -----*/
 app.use(authRoutes);
 app.use("/users", usersRoutes);
+app.use("/movies", moviesRoutes);
+app.use("/lists", listsRoutes);
+
+// app.use((req, res) => {
+//   res.status(404).json({ message: "This page wasn't found" });
+// });
 
 // error route
 app.use((error, req, res, next) => {
