@@ -65,7 +65,7 @@ exports.getAllUsers = async (req, res, next) => {
   try {
     if (req.user.isAdmin) {
       const users = query
-        ? await User.find.limit(10)(req.params.id)
+        ? await User.find().sort({ _id: -1 }).limit(5)
         : await User.find();
       res.status(200).json(users);
     } else {

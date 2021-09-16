@@ -10,6 +10,6 @@ router.post("/", isAuth, listController.createList);
 router.delete("/:id", isAuth, listController.deleteList);
 
 // Get
-router.get("/:id", isAuth, listController.getList);
+router.get("/", isAuth, listController.getList);
 
 module.exports = router;

@@ -32,4 +32,3 @@ module.exports = (req, res, next) => {
   }
 };
 
-/*Buraya bak*/

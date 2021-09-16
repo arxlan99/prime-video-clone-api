@@ -5,10 +5,11 @@ exports.createMovie = async (req, res, next) => {
     if (req.user.isAdmin) {
       const newMovie = new Movie(req.body);
 
-      const savedMovie = newMovie.save();
+      const savedMovie = await newMovie.save();
+
       res.status(201).json(savedMovie);
     } else {
-      const error = new Error("You are not allowed to see all users!.");
+      const error = new Error("You are not allowed to create users!.");
       error.statusCode = 403;
       throw error;
     }
@@ -62,8 +63,7 @@ exports.deleteMovie = async (req, res, next) => {
 
 exports.getMovie = async (req, res, next) => {
   try {
-    await Movie.findById(req.params.id);
-
+    const movie = await Movie.findById(req.params.id);
     res.status(200).json(movie);
   } catch (error) {
     if (!error.statusCode) {

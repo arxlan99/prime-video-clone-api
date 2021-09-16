@@ -5,7 +5,7 @@ exports.createList = async (req, res, next) => {
     if (req.user.isAdmin) {
       const newList = new List(req.body);
       const savedList = await newList.save();
-      res.status(201).jsob(savedList);
+      res.status(201).json(savedList);
     } else {
       const error = new Error("You are not allowed to create a list!.");
       error.statusCode = 403;
