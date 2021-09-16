@@ -1,6 +1,9 @@
 const User = require("./models/user");
 
 const express = require("express");
+const helmet = require("helmet");
+const compression = require("compression");
+
 const app = express();
 
 const dotenv = require("dotenv");
@@ -12,6 +15,10 @@ const moviesRoutes = require("./routes/movies");
 const listsRoutes = require("./routes/lists");
 
 dotenv.config();
+
+console.log(process.env.MONGO_USER);
+console.log(process.env.MONGO_PASSWORD);
+console.log(process.env.MONGO_DATABASE_NAME);
 
 app.use(express.json());
 app.use(
@@ -30,6 +37,9 @@ app.use("/lists", listsRoutes);
 //   res.status(404).json({ message: "This page wasn't found" });
 // });
 
+app.use(helmet());
+app.use(compression());
+
 // error route
 app.use((error, req, res, next) => {
   console.log(error);
@@ -40,8 +50,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.ch9po.mongodb.net/${process.env.MONGO_DATABASE_NAME}`
+  )
   .then((result) => {
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
   })
   .catch((error) => console.log(error));
