@@ -3,8 +3,7 @@ const User = require("./models/user");
 const express = require("express");
 const helmet = require("helmet");
 const compression = require("compression");
-
-const app = express();
+const cors = require("cors");
 
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -16,9 +15,11 @@ const listsRoutes = require("./routes/lists");
 
 dotenv.config();
 
-console.log(process.env.MONGO_USER);
-console.log(process.env.MONGO_PASSWORD);
-console.log(process.env.MONGO_DATABASE_NAME);
+const app = express();
+
+// console.log(process.env.MONGO_USER);
+// console.log(process.env.MONGO_PASSWORD);
+// console.log(process.env.MONGO_DATABASE_NAME);
 
 app.use(express.json());
 app.use(
@@ -27,16 +28,20 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
+
+app.use(cors(), (req, res, next) => {
   next();
 });
 
@@ -67,6 +72,6 @@ mongoose
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.ch9po.mongodb.net/${process.env.MONGO_DATABASE_NAME}`
   )
   .then((result) => {
-    app.listen(process.env.PORT || 8080);
+    app.listen(process.env.PORT || 8800);
   })
   .catch((error) => console.log(error));

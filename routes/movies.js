@@ -16,11 +16,9 @@ router.delete("/:id", isAuth, movieController.deleteMovie);
 router.get("/find/:id", isAuth, movieController.getMovie);
 
 // Get Random
-router.get("/random",isAuth, movieController.getRandomMovie);
+router.get("/random", isAuth, movieController.getRandomMovie);
 
 // Get All
-router.get("/",isAuth, movieController.getAllMovies);
-
-
+router.get("/",  isAuth, movieController.getAllMovies);
 
 module.exports = router;
